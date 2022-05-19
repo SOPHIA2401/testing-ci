@@ -50,7 +50,6 @@ hooks.before("/_search > POST > 200 > application/json",function(transactions,do
       //   },
       //   fields: ["*"]
       // }
-      
 
       var query = {
         query: {
