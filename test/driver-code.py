@@ -73,6 +73,7 @@ class Dredd:
             test_passes.align='l'
             print("Results: Test cases passed.",test_passes,sep="\n")
         print("Total number of test cases: ", tp+tf)
+        print("Test Passed: ",tp)
         print("Test failed: ",tf)
         test_fails.field_names = ["Model Name", "Directory Path"]
         test_fails.add_rows(test_failed)
