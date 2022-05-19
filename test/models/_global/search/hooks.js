@@ -44,20 +44,21 @@ hooks.before("/_search > POST > 200 > application/json",function(transactions,do
       const json = await response.json();
       hooks.log(json);
   
-      // var query = {
-      //   query: {
-      //     match_all: {}
-      //   },
-      //   fields: ["*"]
-      // }
-
-      
-
       var query = {
         query: {
           match_all: {}
-        }
+        },
+        fields: ["*"]
       }
+
+
+
+      // var query = {
+      //   query: {
+      //     match_all: {}
+      //   }
+
+      // }
   
       transactions.request.body = JSON.stringify(query);
       hooks.log(JSON.stringify(query));
