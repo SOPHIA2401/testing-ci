@@ -17,8 +17,6 @@ jobs:
 
     - name: Set up Python
       uses: actions/setup-python@v2
-        # with:
-        #   python-version: 3.9
 
     - name: Install pipenv
       run: pip install pipenv    
@@ -27,31 +25,11 @@ jobs:
       run: pipenv install
       working-directory: ./test 
 
-    - name: checking versions
-      run: |
-        python --version
-        pip --version
-        pipenv --version
-
-
-
-    - name: Installing Dredd
-      run: sudo npm install dredd --global --unsafe-perm=true --allow-root
-
-    - name: Installing node-fetch module
-      run: npm install node-fetch@2
-
-    - name: Installing hooks module  
-      run: npm install hooks
-
-    - name: Installing https module   
-      run: npm install https
-
-    - name: Installing file module 
-      run: npm install fs
-
-    - name: Installing prettytable module 
-      run: python -m pip install -U prettytable
+    # - name: checking versions
+    #   run: |
+    #     python --version
+    #     pip --version
+    #     pipenv --version
 
     - name: Build the stack
       run: docker-compose up -d         
