@@ -124,7 +124,7 @@ paths:
           schema:
             type: string
             pattern: '^([0-9]+)(?:d|h|m|s|ms|micros|nanos)$'
-          example: 1d  
+          example: 1d
         - name: search_type
           in: query
           schema:
@@ -234,6 +234,244 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostSearchResponseContent'
+  '/{index}/_search':
+    post:
+      description: Returns results matching a query.
+      operationId: PostSearchWithIndex
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostSearchWithIndexRequestContent'
+      parameters:
+        - name: index
+          in: path
+          schema:
+            type: string
+            pattern: '^[^+_\-\.][^\\, /*?"<>| ,#\nA-Z]+$'
+          required: true
+          example: books
+        - name: allow_no_indices
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: allow_partial_search_results
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: analyzer
+          in: query
+          schema:
+            type: string
+        - name: analyze_wildcard
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: batched_reduce_size
+          in: query
+          schema:
+            type: number
+            format: int32
+            nullable: true
+        - name: ccs_minimize_roundtrips
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: default_operator
+          in: query
+          schema:
+            $ref: '#/components/schemas/DefaultOperator'
+        - name: df
+          in: query
+          schema:
+            type: string
+        - name: docvalue_fields
+          in: query
+          schema:
+            type: string
+        - name: expand_wildcards
+          in: query
+          schema:
+            $ref: '#/components/schemas/ExpandWildcards'
+        - name: explain
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: from
+          in: query
+          schema:
+            type: number
+            format: int32
+            nullable: true
+        - name: ignore_throttled
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: ignore_unavailable
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: lenient
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: max_concurrent_shard_requests
+          in: query
+          schema:
+            type: number
+            format: int64
+            nullable: true
+        - name: pre_filter_shard_size
+          in: query
+          schema:
+            type: number
+            format: int64
+            nullable: true
+        - name: preference
+          in: query
+          schema:
+            type: string
+        - name: q
+          in: query
+          schema:
+            type: string
+        - name: request_cache
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: rest_total_hits_as_int
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: routing
+          in: query
+          schema:
+            type: string
+        - name: scroll
+          in: query
+          schema:
+            type: string
+            pattern: '^([0-9]+)(?:d|h|m|s|ms|micros|nanos)$'
+          example: 1d
+        - name: search_type
+          in: query
+          schema:
+            $ref: '#/components/schemas/SearchType'
+        - name: seq_no_primary_term
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: size
+          in: query
+          schema:
+            type: number
+            format: int32
+            nullable: true
+        - name: sort
+          in: query
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+          explode: true
+        - name: source
+          in: query
+          schema:
+            type: string
+        - name: source_excludes
+          in: query
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+          explode: true
+        - name: source_includes
+          in: query
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+          explode: true
+        - name: stats
+          in: query
+          schema:
+            type: string
+        - name: stored_fields
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: suggest_field
+          in: query
+          schema:
+            type: string
+        - name: suggest_mode
+          in: query
+          schema:
+            $ref: '#/components/schemas/SuggestMode'
+        - name: suggest_size
+          in: query
+          schema:
+            type: number
+            format: int64
+            nullable: true
+        - name: suggest_text
+          in: query
+          schema:
+            type: string
+        - name: terminate_after
+          in: query
+          schema:
+            type: number
+            format: int32
+            nullable: true
+        - name: timeout
+          in: query
+          schema:
+            type: string
+            pattern: '^([0-9]+)(?:d|h|m|s|ms|micros|nanos)$'
+        - name: track_scores
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: track_total_hits
+          in: query
+          schema:
+            type: number
+            format: int32
+            nullable: true
+        - name: typed_keys
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: version
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: PostSearchWithIndex 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSearchWithIndexResponseContent'
 components:
   schemas:
     DefaultOperator:
@@ -327,8 +565,7 @@ components:
       type: object
       properties:
         _scroll_id:
-          type: string  
-          nullable: true
+          type: string
         took:
           type: number
           format: int64
@@ -339,7 +576,69 @@ components:
         _shards:
           $ref: '#/components/schemas/ShardStatistics'
         hits:
-          $ref: '#/components/schemas/HitsMetadata' 
+          $ref: '#/components/schemas/HitsMetadata'
+    PostSearchWithIndexRequestContent:
+      type: object
+      properties:
+        docvalue_fields:
+          type: string
+        explain:
+          type: boolean
+          nullable: true
+        from:
+          type: number
+          format: int32
+          nullable: true
+        seq_no_primary_term:
+          type: boolean
+          nullable: true
+        size:
+          type: number
+          format: int32
+          nullable: true
+        source:
+          type: string
+        stats:
+          type: string
+        terminate_after:
+          type: number
+          format: int32
+          nullable: true
+        timeout:
+          type: string
+          pattern: '^([0-9]+)(?:d|h|m|s|ms|micros|nanos)$'
+        version:
+          type: boolean
+          nullable: true
+        fields:
+          type: array
+          items:
+            type: string
+        min_score:
+          type: number
+          format: int32
+          nullable: true
+        indices_boost:
+          type: array
+          items: {}
+        query:
+          $ref: '#/components/schemas/UserDefinedObjectStructure'
+    PostSearchWithIndexResponseContent:
+      type: object
+      properties:
+        _scroll_id:
+          type: string
+        took:
+          type: number
+          format: int64
+          nullable: true
+        timed_out:
+          type: boolean
+          nullable: true
+        _shards:
+          $ref: '#/components/schemas/ShardStatistics'
+        hits:
+          $ref: '#/components/schemas/HitsMetadata'
     Relation:
       type: string
       enum:

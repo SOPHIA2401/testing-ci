@@ -50,15 +50,6 @@ hooks.before("/_search > POST > 200 > application/json",function(transactions,do
         },
         fields: ["*"]
       }
-
-
-
-      // var query = {
-      //   query: {
-      //     match_all: {}
-      //   }
-
-      // }
   
       transactions.request.body = JSON.stringify(query);
       hooks.log(JSON.stringify(query));
@@ -89,3 +80,67 @@ hooks.before("/_search > POST > 200 > application/json",function(transactions,do
     request();
   
   });
+
+// POST SEARCH : INDEX
+
+hooks.before("/{index}/_search > POST > 200 > application/json",function(transactions,done) {
+    transactions.expected.headers['Content-Type'] =  "application/json; charset=UTF-8";
+  
+    const request = async () => {
+  
+      hooks.log("CREATE CLUSTER BEFORE POST SEARCH API.");
+      var url = address();
+      const response = await fetch(url+'/books',{
+      method: 'PUT',
+      body:JSON.stringify({
+          settings : {
+           index: {
+              number_of_shards:1,
+              number_of_replicas:0
+              }
+          }    
+      }),
+      headers:{
+          "content-type": "application/json; charset=UTF-8"
+         }
+      });
+      
+      const json = await response.json();
+      hooks.log(json);
+  
+      var query = {
+        query: {
+          match_all: {}
+        },
+        fields: ["*"]
+      }
+  
+      transactions.request.body = JSON.stringify(query);
+      hooks.log(JSON.stringify(query));
+      done();
+    }
+  
+    request();
+  
+  
+  });
+  
+  hooks.after("/{index}/_search > POST > 200 > application/json",function(transactions,done){
+  
+    const request = async () => {
+      
+      hooks.log("DELETE CLUSTER AFTER COMPLETE VALIDATION POST SEARCH API.");
+      
+      var url = address();
+      const response = await fetch(url+'/books',{
+        method: 'DELETE'
+      });
+  
+      const json = await response.json();
+      hooks.log(json);
+      done();
+    } 
+    
+    request();
+  
+  });  

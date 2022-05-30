@@ -323,9 +323,6 @@ structure PostSearchWithIndexInput {
 
 structure PostSearchWithIndexOutput {
 
-    @required
-    index: IndexName,
-
     _scroll_id: String,
 
     took: Long,
@@ -336,3 +333,22 @@ structure PostSearchWithIndexOutput {
 
     hits: HitsMetadata
 }
+
+apply PostSearch @examples([
+    {
+        title: "Examples for Post search Operation.",
+        input: {
+            scroll: "1d"
+        }
+    }
+])
+
+apply PostSearchWithIndex @examples([
+    {
+        title: "Examples for Post Search Operation.",
+        input: {
+            index: "books",
+            scroll: "1d"
+        }
+    }
+])
