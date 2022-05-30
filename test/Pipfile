@@ -8,5 +8,8 @@ prettytable = "*"
 
 [dev-packages]
 
+[packages.whitenoise]
+extras = [ "prettytable",]
+
 [requires]
 python_version = "*"
