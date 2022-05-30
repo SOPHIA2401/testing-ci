@@ -15,6 +15,9 @@ jobs:
       run: npm install
       working-directory: ./test 
 
+    - name: Installing dredd
+      run: dredd --version
+
     - name: Set up Python
       uses: actions/setup-python@v2
 
@@ -25,8 +28,7 @@ jobs:
       run: pipenv install --system
       working-directory: ./test 
 
-    - name: Installing dredd
-      run: dredd --version
+
       # run: docker pull apiaryio/dredd
     # - name: checking versions
     #   run: |
