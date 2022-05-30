@@ -25,11 +25,12 @@ jobs:
       run: pipenv install
       working-directory: ./test 
 
-    # - name: checking versions
-    #   run: |
-    #     python --version
-    #     pip --version
-    #     pipenv --version
+    - name: checking versions
+      run: |
+        pipenv run pip list 
+        python --version
+        pip --version
+        pipenv --version
 
     - name: Build the stack
       run: docker-compose up -d         
