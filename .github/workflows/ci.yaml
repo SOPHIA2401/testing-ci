@@ -25,6 +25,8 @@ jobs:
       run: pipenv install --system
       working-directory: ./test 
 
+    - name: Installing dredd
+      run: docker pull apiaryio/dredd
     # - name: checking versions
     #   run: |
     #     pipenv run pip list 
