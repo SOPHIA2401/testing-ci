@@ -22,7 +22,7 @@ jobs:
       run: pip install pipenv    
 
     - name: Installing python modules 
-      run: pipenv install
+      run: pipenv install --system
       working-directory: ./test 
 
     - name: checking versions
