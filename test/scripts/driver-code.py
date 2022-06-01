@@ -45,7 +45,7 @@ class Dredd:
         test_passed = []
         test_passes = PrettyTable()
         test_fails = PrettyTable()
-        for dirpath, dirnames, files in os.walk("./models"+self.path):
+        for dirpath, dirnames, files in os.walk("../models"+self.path):
             curr_path = dirpath.split('/')
             curr_dir = curr_path[len(curr_path)-1]         
             if files:
