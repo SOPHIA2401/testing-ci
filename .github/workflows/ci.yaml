@@ -15,9 +15,8 @@ jobs:
       run: npm install
       working-directory: ./test 
 
-    # - name: Installing dredd
-    #   run: dredd --version
-    #   working-directory: ./test 
+    - name: Installing Dredd
+      run: sudo npm install dredd --global --unsafe-perm=true --allow-root  
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -28,17 +27,7 @@ jobs:
     - name: Installing python modules 
       run: pipenv install --system
       working-directory: ./test 
-
-
-      # run: docker pull apiaryio/dredd
-    # - name: checking versions
-    #   run: |
-    #     pipenv run pip list 
-    #     python --version
-    #     pip --version
-    #     pipenv --version
-    #   working-directory: ./test   
-
+    
     - name: Build the stack
       run: docker-compose up -d         
       shell: bash

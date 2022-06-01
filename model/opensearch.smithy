@@ -8,9 +8,6 @@ namespace OpenSearch
 
 use aws.protocols#restJson1
 
-@externalDocumentation(
-    "OpenSearch Documentation": "https://opensearch.org/docs/latest/"
-)
 
 @restJson1
 service OpenSearch {
