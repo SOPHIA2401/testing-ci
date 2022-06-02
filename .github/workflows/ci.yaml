@@ -34,7 +34,7 @@ jobs:
       working-directory: ./test  
 
     - name: Waiting for OpenSearch domain to be up.
-      run: chmod +x domain-check.sh  
+      run: sh ./domain-check.sh
       shell: bash
       working-directory: ./test      
 
