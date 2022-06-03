@@ -8,10 +8,12 @@ namespace OpenSearch
 
 use aws.protocols#restJson1
 
+@externalDocumentation(
+    "OpenSearch Documentation": "https://opensearch.org/docs/latest/"
+)
 
 @restJson1
-service OpenSearch {
+service OpenSearch{
     version: "2021-11-23",
-  //  operations:[PostAliases]
-   operations: [PostAliases, PutCreateIndex, PutIndexMapping, PutIndexMappingWithIndex, GetCatIndices, GetCatIndicesWithIndex, GetCatNodes, PostSearch, PostSearchWithIndex, DeleteIndex, GetDocumentDoc, GetDocumentSource, GetPingCluster, PutUpdateClusterSettings, GetClusterSettings]
+   operations: [PutCreateIndex, PutIndexMapping, PutIndexMappingWithIndex, GetCatIndices, GetCatIndicesWithIndex, GetCatNodes, PostSearch, PostSearchWithIndex, DeleteIndex, GetDocumentDoc, GetDocumentSource, GetPingCluster, PutUpdateClusterSettings, GetClusterSettings, PostAliases]
 }
