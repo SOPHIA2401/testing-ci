@@ -15,12 +15,13 @@ jobs:
       run: npm install
       working-directory: ./test 
 
-    - name: Installing Dredd
-      run: sudo npm install dredd --global --unsafe-perm=true --allow-root  
+    # - name: Installing Dredd
+    #   run: sudo npm install dredd --global --unsafe-perm=true --allow-root  
 
     - name: checking dredd version
       run: |
-        dredd --version
+        npx dredd --version
+        npm list
 
     - name: Set up Python
       uses: actions/setup-python@v2
