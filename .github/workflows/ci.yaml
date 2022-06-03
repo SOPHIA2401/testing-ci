@@ -21,7 +21,6 @@ jobs:
     - name: checking dredd version
       run: |
         dredd --version
-        node-fetch --version
 
     - name: Set up Python
       uses: actions/setup-python@v2
