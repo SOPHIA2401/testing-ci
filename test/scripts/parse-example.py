@@ -81,9 +81,9 @@ class OperationFilter:
             self.output + "/model.openapi.yaml" + " --no-sort"
         os.system(command)
 
-        # Removing temporary file.
-        file_path = self.output + "/model.openapi.json"
-        os.remove(file_path)
+        # # Removing temporary file.
+        # file_path = self.output + "/model.openapi.json"
+        # os.remove(file_path)
 
 
 # Parsing command line arguments:

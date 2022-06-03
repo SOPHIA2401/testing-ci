@@ -50,10 +50,11 @@ class Dredd:
             curr_dir = curr_path[len(curr_path)-1]         
             if files:
                 print(dirpath)
-                command = "npx dredd " + dirpath +"/"+ files[1]+ " " + self.endpoint+ " --user=" + self.user + " --hookfiles=" + dirpath + "/" + files[0]
+                command = "npx dredd " + dirpath +"/"+ files[1]+ " " + self.endpoint+ " --user=" + self.user + " --hookfiles=" + dirpath + "/" + files[0] 
                 if self.test_name != "":
                     if self.test_name == curr_dir:
                         result = os.system(command)
+                        print("\n RESULT: ",result)
                         if(result != 0): 
                             test_failed.append([curr_dir,dirpath])
                             tf = tf+1
@@ -61,7 +62,8 @@ class Dredd:
                             tp = tp+1
                             test_passed.append([curr_dir,dirpath])                                  
                 else:
-                    result = os.system(command)  
+                    result = os.system(command) 
+                    print("\n RESULT: ",result) 
                     if(result != 0):
                         tf = tf+1
                         test_failed.append([curr_dir,dirpath])
