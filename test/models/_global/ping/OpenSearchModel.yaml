@@ -1,4 +1,4 @@
-openapi: '3.0.2'
+openapi: 3.0.3
 info:
   title: OpenSearch
   version: '2021-11-23'
