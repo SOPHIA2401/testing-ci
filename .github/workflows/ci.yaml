@@ -13,18 +13,23 @@ jobs:
 
     - name: Installing Dredd
       run: sudo npm install dredd --global --unsafe-perm=true --allow-root
+      working-directory: ./test 
 
     - name: Installing node-fetch module
       run: npm install node-fetch@2
+      working-directory: ./test 
 
     - name: Installing hooks module  
       run: npm install hooks
+      working-directory: ./test 
 
     - name: Installing https module   
       run: npm install https
+      working-directory: ./test 
 
     - name: Installing file module 
-      run: npm install fs      
+      run: npm install fs 
+      working-directory: ./test      
 
     # - name: Installing node modules
     #   run: npm install
