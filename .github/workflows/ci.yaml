@@ -1,75 +1,3 @@
-name: CI
-
-on: [push, pull_request]
-
-jobs:
-  run_tests:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Node.js 
-      uses: actions/setup-node@v1
-
-    - name: Installing Dredd
-      run: sudo npm install dredd --global --unsafe-perm=true --allow-root
-      working-directory: ./test 
-
-    - name: Installing node-fetch module
-      run: npm install node-fetch@2
-      working-directory: ./test 
-
-    - name: Installing hooks module  
-      run: npm install hooks
-      working-directory: ./test 
-
-    - name: Installing https module   
-      run: npm install https
-      working-directory: ./test 
-
-    - name: Installing file module 
-      run: npm install fs 
-      working-directory: ./test      
-
-    # - name: Installing node modules
-    #   run: npm install
-    #   working-directory: ./test 
-
-    # - name: Installing Dredd
-    #   run: sudo npm install dredd --global --unsafe-perm=true --allow-root  
-
-    - name: checking dredd version
-      run: |
-        npx dredd --version
-        npm list
-      working-directory: ./test   
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-
-    - name: Install pipenv
-      run: pip install pipenv    
-
-    - name: Installing python modules 
-      run: pipenv install --system
-      working-directory: ./test 
-    
-    - name: Build the stack
-      run: docker-compose up -d         
-      shell: bash
-      working-directory: ./test  
-
-    - name: Waiting for OpenSearch domain to be up.
-      run: sh ./.github/workflows/domain-check.sh
-    
-    - name: Run script file
-      run: |
-          #  Disabling TLS certificate verfication as hosted on docker.
-          export NODE_TLS_REJECT_UNAUTHORIZED=0
-          python driver-code.py --testpass True
-      shell: bash
-      working-directory: ./test/scripts
-
 # name: CI
 
 # on: [push, pull_request]
@@ -80,58 +8,130 @@ jobs:
 #     steps:
 #     - uses: actions/checkout@v2
 
-#     - name: Use Node.js 
-#       uses: actions/setup-node@v1  
+#     - name: Set up Node.js 
+#       uses: actions/setup-node@v1
 
 #     - name: Installing Dredd
 #       run: sudo npm install dredd --global --unsafe-perm=true --allow-root
+#       working-directory: ./test 
 
 #     - name: Installing node-fetch module
 #       run: npm install node-fetch@2
+#       working-directory: ./test 
 
 #     - name: Installing hooks module  
 #       run: npm install hooks
+#       working-directory: ./test 
 
 #     - name: Installing https module   
 #       run: npm install https
+#       working-directory: ./test 
 
 #     - name: Installing file module 
-#       run: npm install fs
+#       run: npm install fs 
+#       working-directory: ./test      
 
-#     - name: Installing prettytable module 
-#       run: python -m pip install -U prettytable
+#     # - name: Installing node modules
+#     #   run: npm install
+#     #   working-directory: ./test 
 
+#     # - name: Installing Dredd
+#     #   run: sudo npm install dredd --global --unsafe-perm=true --allow-root  
+
+#     - name: checking dredd version
+#       run: |
+#         npx dredd --version
+#         npm list
+#       working-directory: ./test   
+
+#     - name: Set up Python
+#       uses: actions/setup-python@v2
+
+#     - name: Install pipenv
+#       run: pip install pipenv    
+
+#     - name: Installing python modules 
+#       run: pipenv install --system
+#       working-directory: ./test 
+    
 #     - name: Build the stack
 #       run: docker-compose up -d         
 #       shell: bash
-#       working-directory: ./test     
+#       working-directory: ./test  
 
 #     - name: Waiting for OpenSearch domain to be up.
-#       run: |
-#         counter=1
-#         for counter in {1..10}
-#         do
-#           if [ $(curl -s -o /dev/null --head -w "%{http_code}" 'https://admin:admin@localhost:9200' -H 'Content-Type:application/json' --insecure -v) -ne 200 ]; then
-#             sleep 30s
-#           else
-#             # Waiting for security plugin to be initialised and become operational.
-#             echo  "Waiting for addtional 30 seconds.. for Opensearch domain to be up."
-#             sleep 30s
-#             break 
-#           fi  
-#         done
-#         if [ $counter -eq 11 ]; then
-#           echo "Unable to connect with OpenSearch URL https://localhost:9200/"
-#           exit 1
-#         fi   
-#       shell: bash
-#       working-directory: ./test       
-   
+#       run: sh ./.github/workflows/domain-check.sh
+    
 #     - name: Run script file
 #       run: |
 #           #  Disabling TLS certificate verfication as hosted on docker.
 #           export NODE_TLS_REJECT_UNAUTHORIZED=0
-#           python driver-code.py 
+#           python driver-code.py --testpass True
 #       shell: bash
-#       working-directory: ./test
+#       working-directory: ./test/scripts
+
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 
+      uses: actions/setup-node@v1  
+
+    - name: Installing Dredd
+      run: sudo npm install dredd --global --unsafe-perm=true --allow-root
+
+    - name: Installing node-fetch module
+      run: npm install node-fetch@2
+
+    - name: Installing hooks module  
+      run: npm install hooks
+
+    - name: Installing https module   
+      run: npm install https
+
+    - name: Installing file module 
+      run: npm install fs
+
+    - name: Installing prettytable module 
+      run: python -m pip install -U prettytable
+
+    - name: Build the stack
+      run: docker-compose up -d         
+      shell: bash
+      working-directory: ./test     
+
+    - name: Waiting for OpenSearch domain to be up.
+      run: |
+        counter=1
+        for counter in {1..10}
+        do
+          if [ $(curl -s -o /dev/null --head -w "%{http_code}" 'https://admin:admin@localhost:9200' -H 'Content-Type:application/json' --insecure -v) -ne 200 ]; then
+            sleep 30s
+          else
+            # Waiting for security plugin to be initialised and become operational.
+            echo  "Waiting for addtional 30 seconds.. for Opensearch domain to be up."
+            sleep 30s
+            break 
+          fi  
+        done
+        if [ $counter -eq 11 ]; then
+          echo "Unable to connect with OpenSearch URL https://localhost:9200/"
+          exit 1
+        fi   
+      shell: bash
+      working-directory: ./test       
+   
+    - name: Run script file
+      run: |
+          #  Disabling TLS certificate verfication as hosted on docker.
+          export NODE_TLS_REJECT_UNAUTHORIZED=0
+          python driver-code.py 
+      shell: bash
+      working-directory: ./test/scripts
 
