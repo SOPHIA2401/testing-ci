@@ -19,7 +19,9 @@ jobs:
       run: sudo npm install dredd --global --unsafe-perm=true --allow-root  
 
     - name: checking dredd version
-      run: dredd --version  
+      run: |
+        dredd --version
+        node-fetch --version
 
     - name: Set up Python
       uses: actions/setup-python@v2
