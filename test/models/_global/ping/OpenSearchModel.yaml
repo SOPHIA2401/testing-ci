@@ -3,7 +3,7 @@ info:
   title: OpenSearch
   version: '2021-11-23'
 paths:
-  /:
+  '/':
     get:
       description: Returns whether the cluster is running.
       operationId: GetPingCluster
