@@ -11,9 +11,24 @@ jobs:
     - name: Set up Node.js 
       uses: actions/setup-node@v2
 
-    - name: Installing node modules
-      run: npm install
-      working-directory: ./test 
+    - name: Installing Dredd
+      run: sudo npm install dredd --global --unsafe-perm=true --allow-root
+
+    - name: Installing node-fetch module
+      run: npm install node-fetch@2
+
+    - name: Installing hooks module  
+      run: npm install hooks
+
+    - name: Installing https module   
+      run: npm install https
+
+    - name: Installing file module 
+      run: npm install fs      
+
+    # - name: Installing node modules
+    #   run: npm install
+    #   working-directory: ./test 
 
     # - name: Installing Dredd
     #   run: sudo npm install dredd --global --unsafe-perm=true --allow-root  
