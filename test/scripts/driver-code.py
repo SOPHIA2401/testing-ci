@@ -39,34 +39,45 @@ class Dredd:
 
     def dredd_work(self):
         # Walking in test directory tree and runing dredd framework.
+        tp = 0
+        tf = 0
         test_failed = []
         test_passed = []
         test_passes = PrettyTable()
         test_fails = PrettyTable()
-        for dirpath, dirnames, files in os.walk("./models"+self.path):
+        for dirpath, dirnames, files in os.walk("../models"+self.path):
             curr_path = dirpath.split('/')
             curr_dir = curr_path[len(curr_path)-1]         
             if files:
-                command = "dredd " + dirpath +"/"+ files[1]+ " " + self.endpoint+ " --user=" + self.user + " --hookfiles=" + dirpath + "/" + files[0]
+                print(dirpath)
+                command = "dredd " + dirpath +"/"+ files[1]+ " " + self.endpoint+ " --user=" + self.user + " --hookfiles=" + dirpath + "/" + files[0] + " -d" 
                 if self.test_name != "":
                     if self.test_name == curr_dir:
                         result = os.system(command)
+                        print("\n RESULT: ",result)
                         if(result != 0): 
                             test_failed.append([curr_dir,dirpath])
+                            tf = tf+1
                         else:
+                            tp = tp+1
                             test_passed.append([curr_dir,dirpath])                                  
                 else:
-                    result = os.system(command)  
+                    result = os.system(command) 
+                    print("\n RESULT: ",result) 
                     if(result != 0):
+                        tf = tf+1
                         test_failed.append([curr_dir,dirpath])
                     else:
+                        tp = tp+1
                         test_passed.append([curr_dir,dirpath]) 
         if self.test_pass == True:
             test_passes.field_names = ["Model Name", "Directory Path"]
             test_passes.add_rows(test_passed)
             test_passes.align='l'
             print("Results: Test cases passed.",test_passes,sep="\n")
-
+        print("Total number of test cases: ", tp+tf)
+        print("Test Passed: ",tp)
+        print("Test failed: ",tf)
         test_fails.field_names = ["Model Name", "Directory Path"]
         test_fails.add_rows(test_failed)
         test_fails.align='l'

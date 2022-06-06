@@ -178,7 +178,6 @@ components:
       example: 
         _id: 1
         _index: books
-        _type: _doc
     UserDefinedValueMap:
       type: object
       additionalProperties: {}
